@@ -10,5 +10,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4 
 
-      - name: Run a simple script
-        run: echo "The pipeline is running successfully!"
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.PASSWORD_DOCKER }}
+
+      - name: Build the docker image 
+        run: docker build -t ${{ secrets.DOCKER_USER }}/node-app . 
+
+      - name: Push to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USER }}/zomatoimage:latest
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.3 
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USER }}/node-app
+            docker run -d -p 3000:300- --name node-app ${{ secrets.DOCKER_USER }}/node-app:latest
+          
+          
+
+      
