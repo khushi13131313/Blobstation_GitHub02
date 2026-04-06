@@ -30,7 +30,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             docker pull ${{ secrets.DOCKER_USER }}/node-app
-            docker run -d -p 3000:300- --name node-app ${{ secrets.DOCKER_USER }}/node-app:latest
+            docker run -d -p 3000:3000 --name node-app ${{ secrets.DOCKER_USER }}/node-app:latest
           
           
 
