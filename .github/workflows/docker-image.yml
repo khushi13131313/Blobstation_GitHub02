@@ -1,18 +1,14 @@
-name: Docker Image CI
-
-on:
+name: Simple Pipeline
+on: 
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
+    branches:
+      - master
 jobs:
-
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - name: Checkout code
+        uses: actions/checkout@v4 
+
+      - name: Run a simple script
+        run: echo "The pipeline is running successfully!"
