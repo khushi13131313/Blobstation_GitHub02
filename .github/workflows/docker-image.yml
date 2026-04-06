@@ -20,7 +20,7 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_USER }}/node-app . 
 
       - name: Push to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USER }}/zomatoimage:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/node-app:latest
 
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.3 
